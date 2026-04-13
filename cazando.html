@@ -2,13 +2,12 @@
 <html>
 <head>
   <title>Juego Cazando</title>
-
+  <link rel="stylesheet" href="cazando.css">
 </head>
-<body>
-
-  <h1>Juego Cazando</h1>
+<body onload="ejecutarAlCargar()"> <h1>Juego Cazando</h1>
   <p>Autor: ian mera</p>
 
+  <canvas id="areaJuego" width="500" height="500"></canvas>
 
   <div class="controles">
     <button>⬆</button>
@@ -18,7 +17,6 @@
     <button>➡</button>
   </div>
 
-
   <div class="panel">
     <span>Puntos: <span id="puntos">0</span></span>
     <span>Tiempo: <span id="tiempo">10</span></span>
@@ -26,6 +24,6 @@
 
   <p id="mensaje"></p>
 
-
+  <script src="cazando.js"></script>
 </body>
 </html>
