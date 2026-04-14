@@ -27,7 +27,6 @@ function graficarRectangulo(x, y, ancho, alto, color) {
     ctx.fillRect(x, y, ancho, alto);
 }
 
-
 function graficarGato() {
     graficarRectangulo(gatoX, gatoY, ANCHO_GATO, ALTO_GATO, "blue");
 }
