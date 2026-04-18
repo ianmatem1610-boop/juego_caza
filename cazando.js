@@ -2,6 +2,7 @@ let gatoX = 0;
 let gatoY = 0;
 let comidaX = 0;
 let comidaY = 0;
+let puntos = 0;
 
 const ALTO_GATO = 50;
 const ANCHO_GATO = 50;
@@ -39,31 +40,50 @@ function limpiarCanva() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+// 3. LÓGICA DE MOVIMIENTO (PARTE 3)
 function moverIzquierda() {
     gatoX = gatoX - 10;
-
-    limpiarCanva();
-
-    graficarGato();
-    graficarComida();
+    actualizarPantalla();
 }
 
 function moverDerecha() {
     gatoX = gatoX + 10;
-    limpiarCanva();
-    graficarGato();
-    graficarComida();
+    actualizarPantalla();
 }
 
 function moverArriba() {
     gatoY = gatoY - 10;
-    limpiarCanva();
-    graficarGato();
-    graficarComida();
+    actualizarPantalla();
 }
 
 function moverAbajo() {
     gatoY = gatoY + 10;
+    actualizarPantalla();
+}
+
+function actualizarPantalla() {
+    limpiarCanva();
+    graficarGato();
+    graficarComida();
+    detectarColision();
+}
+
+function detectarColision() {
+    // Algoritmo de colisión entre rectángulos
+    if (gatoX < comidaX + ANCHO_COMIDA &&
+        gatoX + ANCHO_GATO > comidaX &&
+        gatoY < comidaY + ALTO_COMIDA &&
+        gatoY + ALTO_GATO > comidaY) {
+        
+        comerComida();
+    }
+}
+
+function comerComida() {
+    puntos++;
+    actualizarPuntos(puntos); 
+    comidaX = obtenerNumeroAleatorio(0, canvas.width - ANCHO_COMIDA);
+    comidaY = obtenerNumeroAleatorio(0, canvas.height - ALTO_COMIDA);
     limpiarCanva();
     graficarGato();
     graficarComida();
