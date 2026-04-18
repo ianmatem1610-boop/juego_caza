@@ -72,7 +72,7 @@ function moverDerecha() { gatoX += 10; actualizarPantalla(); }
 function moverArriba() { gatoY -= 10; actualizarPantalla(); }
 function moverAbajo() { gatoY += 10; actualizarPantalla(); }
 
-// 6. COLISIONES Y PUNTAJE
+// 6. COLISIONES Y PUNTAJES
 function detectarColision() {
     if (gatoX < comidaX + ANCHO_COMIDA &&
         gatoX + ANCHO_GATO > comidaX &&
@@ -99,7 +99,7 @@ function comerComida() {
 
     actualizarPantalla();
 }
-
+// puinto del reinicio
 function reiniciarJuego() {
     clearInterval(idIntervalo);
     puntos = 0;
