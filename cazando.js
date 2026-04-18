@@ -99,3 +99,12 @@ function comerComida() {
 
     actualizarPantalla();
 }
+
+function reiniciarJuego() {
+    clearInterval(idIntervalo);
+    puntos = 0;
+    tiempo = 10;
+    actualizarPuntos(puntos);
+    actualizarTiempo(tiempo);
+    iniciarJuego();
+}
