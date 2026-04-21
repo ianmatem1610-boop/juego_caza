@@ -4,7 +4,7 @@ let gatoY = 0;
 let comidaX = 0;
 let comidaY = 0;
 let puntos = 0;
-let tiempo = 10; // Valor inicial
+let tiempo = 15; // se cambia de 10 a 15
 let idIntervalo; // Para detener el tiempo
 
 const ALTO_GATO = 50;
@@ -103,7 +103,7 @@ function comerComida() {
 function reiniciarJuego() {
     clearInterval(idIntervalo);
     puntos = 0;
-    tiempo = 10;
+    tiempo = 15;
     actualizarPuntos(puntos);
     actualizarTiempo(tiempo);
     iniciarJuego();
