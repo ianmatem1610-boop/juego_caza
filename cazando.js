@@ -87,6 +87,10 @@ function comerComida() {
     puntos++;
     actualizarPuntos(puntos); // Llama a utilitarios.js
 
+    tiempo=15;
+    
+    actualizarTiempo(tiempo);
+
     if (puntos >= 6) {
         clearInterval(idIntervalo);
         alert("¡FELICIDADES! Has ganado");
