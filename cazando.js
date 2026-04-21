@@ -4,11 +4,20 @@ let gatoY = 0;
 let comidaX = 0;
 let comidaY = 0;
 let puntos = 0;
-let tiempo = 15; // se cambia de 10 a 15
-let idIntervalo; // Para detener el tiempo
+let tiempo = 15; // Punto 1: Tiempo inicial de 15s
+let limiteActual = 15; // Para la dificultad progresiva
+let idIntervalo; 
 
-const ALTO_GATO = 50;
-const ANCHO_GATO = 50;
+// Imágenes
+let gatoImg = new Image();
+gatoImg.src = "gato.jpg"; // Asegúrate de que el archivo exista
+
+let comidaImg = new Image();
+comidaImg.src = "comida.jpg"; // AQUÍ PONES EL NOMBRE DE TU IMAGEN
+
+// Constantes de tamaño
+const ALTO_GATO = 60;
+const ANCHO_GATO = 60;
 const ALTO_COMIDA = 30;
 const ANCHO_COMIDA = 30;
 
@@ -17,23 +26,22 @@ let ctx = canvas.getContext("2d");
 
 // 2. INICIO DEL JUEGO
 function iniciarJuego() {
-    // Posiciones iniciales
     gatoX = (canvas.width / 2) - (ANCHO_GATO / 2);
     gatoY = (canvas.height / 2) - (ALTO_GATO / 2);
-    comidaX = canvas.width - ANCHO_COMIDA;
-    comidaY = canvas.height - ALTO_COMIDA;
+    comidaX = obtenerNumeroAleatorio(0, canvas.width - ANCHO_COMIDA);
+    comidaY = obtenerNumeroAleatorio(0, canvas.height - ALTO_COMIDA);
 
-    graficarGato();
-    graficarComida();
-
-    // Iniciar cuenta regresiva cada segundo
+    actualizarPantalla();
+    
+    // Limpiamos cualquier intervalo previo para evitar errores de velocidad
+    clearInterval(idIntervalo); 
     idIntervalo = setInterval(restarTiempo, 1000);
 }
 
 // 3. LÓGICA DEL TIEMPO
 function restarTiempo() {
-    tiempo--; // Restar 1 al tiempo
-    actualizarTiempo(tiempo); // Llama a utilitarios.js
+    tiempo--; 
+    actualizarTiempo(tiempo); 
 
     if (tiempo <= 0) {
         clearInterval(idIntervalo);
@@ -42,24 +50,19 @@ function restarTiempo() {
 }
 
 // 4. FUNCIONES DE DIBUJO
-function graficarRectangulo(x, y, ancho, alto, color) {
-    ctx.fillStyle = color;
-    ctx.fillRect(x, y, ancho, alto);
-}
-
 function graficarGato() {
-    graficarRectangulo(gatoX, gatoY, ANCHO_GATO, ALTO_GATO, "blue");
+    ctx.drawImage(gatoImg, gatoX, gatoY, ANCHO_GATO, ALTO_GATO);
 }
 
 function graficarComida() {
-    graficarRectangulo(comidaX, comidaY, ANCHO_COMIDA, ALTO_COMIDA, "red");
+    // Punto: Cambio de la comida por imagen
+    ctx.drawImage(comidaImg, comidaX, comidaY, ANCHO_COMIDA, ALTO_COMIDA);
 }
 
 function limpiarCanva() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-// 5. MOVIMIENTOS
 function actualizarPantalla() {
     limpiarCanva();
     graficarGato();
@@ -67,10 +70,11 @@ function actualizarPantalla() {
     detectarColision();
 }
 
-function moverIzquierda() { gatoX -= 10; actualizarPantalla(); }
-function moverDerecha() { gatoX += 10; actualizarPantalla(); }
-function moverArriba() { gatoY -= 10; actualizarPantalla(); }
-function moverAbajo() { gatoY += 10; actualizarPantalla(); }
+// 5. MOVIMIENTOS
+function moverIzquierda() { gatoX -= 15; actualizarPantalla(); }
+function moverDerecha() { gatoX += 15; actualizarPantalla(); }
+function moverArriba() { gatoY -= 15; actualizarPantalla(); }
+function moverAbajo() { gatoY += 15; actualizarPantalla(); }
 
 // 6. COLISIONES Y PUNTAJES
 function detectarColision() {
@@ -85,11 +89,7 @@ function detectarColision() {
 
 function comerComida() {
     puntos++;
-    actualizarPuntos(puntos); // Llama a utilitarios.js
-
-    tiempo=15;
-    
-    actualizarTiempo(tiempo);
+    actualizarPuntos(puntos);
 
     if (puntos >= 6) {
         clearInterval(idIntervalo);
@@ -97,17 +97,24 @@ function comerComida() {
         return;
     }
 
+    // Punto 2 y 3: Reinicio de tiempo con dificultad progresiva
+    limiteActual--; 
+    tiempo = limiteActual; 
+    actualizarTiempo(tiempo);
+
     // Nueva posición aleatoria
     comidaX = obtenerNumeroAleatorio(0, canvas.width - ANCHO_COMIDA);
     comidaY = obtenerNumeroAleatorio(0, canvas.height - ALTO_COMIDA);
 
     actualizarPantalla();
 }
-// puinto del reinicio
+
+// BOTÓN REINICIAR
 function reiniciarJuego() {
-    clearInterval(idIntervalo);
+    clearInterval(idIntervalo); // Detener el tiempo actual
     puntos = 0;
-    tiempo = 15;
+    limiteActual = 15; // Reset de dificultad
+    tiempo = 15;       // Reset de tiempo
     actualizarPuntos(puntos);
     actualizarTiempo(tiempo);
     iniciarJuego();
